@@ -1,48 +1,28 @@
-const bodyNode = document.querySelector('body');
-bodyNode.style.background = '#323531';
-bodyNode.style.maxWidth = '1200px';
-bodyNode.style.margin = '0px auto';
-bodyNode.style.textAlign = 'center';
-bodyNode.style.paddingTop = '40px';
-bodyNode.style.display = 'flex';
-bodyNode.style.flexDirection = 'column';
-bodyNode.style.alignItems = 'center';
-bodyNode.style.fontSize = '32px';
+const CHANGE_TITLE = 'Ура, теперь не скучно 🔥';
 
-const bodyCativity = document.getElementById('bodyCativity');
+const boredNode = document.getElementById('bodyCativity');
+const boredTitleNode = document.getElementById('boredTitle');
+const boredTextNode = document.getElementById('boredText');
+const boredStartBtnNode = document.getElementById('starBtn');
 
-// const img = document.createElement('img');
-// img.style.width = '50%';
-// img.style.maxHeight = '600px';
-// img.style.borderRadius = '20px';
-
-const button = document.createElement('button');
-button.style.width = '50%';
-button.style.height = '60px';
-button.style.borderRadius = '20px';
-button.style.backgroundColor = 'blue';
-button.style.fontSize = '24px';
-button.style.color = 'yellow';
-button.style.marginBottom = '30px';
-button.type = 'button';
-button.textContent = 'Нажми здесь';
-
-bodyNode.insertAdjacentElement('afterbegin', button);
-
-button.addEventListener('click', () => {
+const startHappy = () => {
 	fetch('http://www.boredapi.com/api/activity/')
 		.then(response => response.json())
 		.then(result => {
-			// if (result.status !== 'success') {
-			// 	return;
-			// }
-
 			const res = result.activity;
-			console.log(res);
 
-			// const imgSrc = result.message;
-			// img.src = imgSrc;
-
-			bodyCativity.textContent = res;
+			boredTextNode.innerText = res;
+			checkChangeText(res);
 		});
+};
+
+const checkChangeText = res => {
+	if (boredTextNode.innerText == res) {
+		boredTitleNode.innerText = CHANGE_TITLE;
+		boredNode.classList.add('bored--bg');
+	}
+};
+
+boredStartBtnNode.addEventListener('click', () => {
+	startHappy();
 });
